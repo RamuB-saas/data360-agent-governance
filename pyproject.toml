@@ -15,3 +15,9 @@ data360-agent-governance = "data360_agent_governance.hello:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.ruff]
+line-length = 100
