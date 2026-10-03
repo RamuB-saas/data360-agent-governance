@@ -1,5 +1,5 @@
-
 from pathlib import Path
+
 import pytest
 
 from data360_agent_governance.config import ConfigError, load_settings
@@ -11,15 +11,18 @@ VALID = {
     "SF_PRIVATE_KEY_PATH": "/home/me/.secrets/d360.key",
 }
 
+
 def test_load_settings_reads_values():
     settings = load_settings(VALID)
-    assert settings.SF_USERNAME == VALID["SF_USERNAME"]
-    assert settings.SF_PRIVATE_KEY_PATH == Path(VALID["SF_PRIVATE_KEY_PATH"])
+    assert settings.username == "dev@example.com"
+    assert settings.private_key_path == Path("/home/me/.secrets/d360.key")
     assert settings.dataspace is None
+
 
 def test_dataspace_is_optional_but_read_when_present():
     settings = load_settings({**VALID, "SF_DATASPACE": "default"})
     assert settings.dataspace == "default"
+
 
 def test_all_missing_settings_are_reported_together():
     with pytest.raises(ConfigError) as excinfo:
